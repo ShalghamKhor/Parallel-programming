@@ -1,4 +1,4 @@
-package main
+package assignment1
 
 import (
 	"fmt"
@@ -90,7 +90,7 @@ func (heap *Heap) getSize() int {
 	return heap.size
 }
 
-func main() {
+func Task1() {
 	heap := newHeap(10)
 	heap.insert(3)
 	heap.insert(1)

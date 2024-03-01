@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	assignment1.Swed(10)
+	assignment1.Task1()
+	assignment1.Task2()
 }
