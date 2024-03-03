@@ -59,7 +59,6 @@ func (dq *Deque) addLast(node int) {
 		newNode.prev = dq.tail
 		dq.tail = newNode
 	}
-
 }
 
 func (dq *Deque) removeFirst() int {
@@ -114,14 +113,13 @@ func Task2() {
 	dq.addLast(1)
 	dq.addLast(2)
 	dq.addFirst(0)
-	dq.Display() // Expected: 0 1 2
+	dq.Display()
 
-	// Deleting elements
 	value := dq.removeFirst()
-	fmt.Println("Deleted from front:", value) // Expected: 0
+	fmt.Println("Deleted from front:", value)
 
 	value1 := dq.removeLast()
-	fmt.Println("Deleted from back:", value1) // Expected: 2
+	fmt.Println("Deleted from back:", value1)
 	b := dq.isEmpty()
 	fmt.Println(b)
 	dq.Display()
