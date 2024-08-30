@@ -1,30 +1,31 @@
-import random
+from queue import Queue
+from threading import Semaphore, Thread
 
-def random_walk(k, max_steps):
-    # Starting position at the center
-    x, y = 0, 0
-    
+class IQS:
 
-    directions = [('up', (0, 1)), ('down', (0, -1)), ('right', (1, 0)), ('left', (-1, 0))]
+    def __init__(self):
+        self.Q = Queue()
+        self.qsem = Semaphore(0)
+
     
-    steps_taken = 0
-    #max_steps = k**2
-    while steps_taken < max_steps:
-        direction = random.choice(directions)
-        x += direction[1][0]
-        y += direction[1][1]
+    def _sort(self):
+        while True:
+            self.qsem.acquire()
+            lo, hi = self.Q.get()
+            if lo < hi:
+                mid = self._partition(lo, hi) # Unchanged11
+                self.Q.put((lo, mid - 1))
+                self.Q.put((mid + 1, hi))
+                self.qsem.release(2)
+
+    def sort(self, l):
+        self.lst = l
+        self.Q.put((0, len(self.lst) - 1))
+        self.qsem.release()
+        ts = [Thread(target=self._sort) for _ in range(self.nt)]
+
+        for t in ts:
+            t.start()
         
-
-        if x > k or x < -k or y > k or y < -k:
-
-            return steps_taken, (x, y)
-        
-        steps_taken += 1
-    
-
-    return steps_taken, (x, y)
-
-k = 5 
-max_steps = 100 
-random_walk_result = random_walk(k, max_steps)
-print(random_walk_result)
+        for t in ts:
+            t.join()
